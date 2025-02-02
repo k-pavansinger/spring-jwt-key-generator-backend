@@ -1,0 +1,3 @@
+[submodule "spring-jwt-key-generator-frontend"]
+	path = spring-jwt-key-generator-frontend
+	url = https://github.com/k-pavansinger/spring-jwt-key-generator-frontend.git
