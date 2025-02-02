@@ -1,5 +1,7 @@
 package com.example.spring_jwt_auth;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +17,7 @@ public class SpringJwtAuthApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringJwtAuthApplication.class, args);
 	}
-	
+
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder encoder) {
         return args -> {
@@ -28,5 +30,20 @@ public class SpringJwtAuthApplication {
             }
         };
     }
+
+
+	@Bean
+	CommandLineRunner initAdminUser(UserRepository userRepository, PasswordEncoder encoder) {
+		return args -> {
+			if (userRepository.findByUsername("admin").isEmpty()) {
+				User admin = new User();
+				admin.setUsername("admin");
+				admin.setPassword(encoder.encode("admin123"));
+				admin.setEmail("admin@example.com");
+				admin.setRoles(List.of("ADMIN"));
+				userRepository.save(admin);
+			}
+		};
+	}
 
 }
